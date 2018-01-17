@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Random Colour Generator</string>
+    <string name="clickButton">Generate Colour</string>
+    <string name="hexText">Hex Value</string>
+</resources>
