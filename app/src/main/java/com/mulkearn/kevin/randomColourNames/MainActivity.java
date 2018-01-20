@@ -1,7 +1,10 @@
 package com.mulkearn.kevin.randomColourNames;
 
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,33 +13,32 @@ import android.graphics.Color;
 import java.util.Random;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener{
+
+    RelativeLayout myLayout;
+    Button colourButton;
+    TextView hexView;
+    TextView nameView;
+
+    String colour;
+
+    private GestureDetectorCompat gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        this.gestureDetector = new GestureDetectorCompat(this,this);
+
         //Create Layout
-        final RelativeLayout myLayout = new RelativeLayout(this);
+        myLayout = new RelativeLayout(this);
         myLayout.setBackgroundColor(Color.WHITE);
 
         //Create Colour Button
-        final Button colourButton = new Button(this);
+        colourButton = new Button(this);
         colourButton.setText("Generate Random Colour");
         colourButton.setBackgroundColor(Color.WHITE);
-        //colourButton.setId(1);
-
-        //Create Hex View
-        final TextView hexView = new TextView(this);
-        hexView.setText("Hex Value");
-        hexView.setTextColor(Color.BLACK);
-        hexView.setShadowLayer(2,2,2,Color.WHITE);
-
-        //Create Name View
-        final TextView nameView = new TextView(this);
-        nameView.setText("Colour Name");
-        nameView.setTextColor(Color.BLACK);
-        nameView.setBackgroundColor(Color.WHITE);
+        colourButton.setTextColor(Color.BLACK);
 
         //Colour Button rules
         RelativeLayout.LayoutParams buttonDetails = new RelativeLayout.LayoutParams(
@@ -47,6 +49,13 @@ public class MainActivity extends AppCompatActivity {
         buttonDetails.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         buttonDetails.setMargins(0,0,0,20);
 
+        //Create Hex View
+        hexView = new TextView(this);
+        hexView.setText("Hex Value");
+        hexView.setTextColor(Color.WHITE);
+        hexView.setShadowLayer(2,2,2,Color.BLACK);
+        hexView.setTextSize(30);
+
         //Hex View rules
         RelativeLayout.LayoutParams textDetails = new RelativeLayout.LayoutParams(
                 RelativeLayout.LayoutParams.WRAP_CONTENT, //text view size of text
@@ -54,14 +63,20 @@ public class MainActivity extends AppCompatActivity {
         );
         textDetails.addRule(RelativeLayout.CENTER_VERTICAL);
         textDetails.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        textDetails.setMargins(0,0,0,20);
+
+        //Create Name View
+        nameView = new TextView(this);
+        nameView.setText("Colour Name");
+        nameView.setTextColor(Color.BLACK);
+        nameView.setBackgroundColor(Color.WHITE);
+        nameView.setGravity(1);
+        nameView.setTextSize(20);
 
         //Name View rules
         RelativeLayout.LayoutParams textNameDetails = new RelativeLayout.LayoutParams(
-                RelativeLayout.LayoutParams.WRAP_CONTENT, //text view size of text
+                RelativeLayout.LayoutParams.FILL_PARENT, //text view size of text
                 RelativeLayout.LayoutParams.WRAP_CONTENT
         );
-        textNameDetails.addRule(RelativeLayout.CENTER_HORIZONTAL);
         textNameDetails.addRule(RelativeLayout.ALIGN_PARENT_TOP);
         textNameDetails.setMargins(0,20,0,0);
 
@@ -81,18 +96,59 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View v){
                         String col = colourGenerator();
 
+                        nameView.setBackgroundColor(Color.WHITE);
                         hexView.setText(col);
                         nameView.setText(colourName(col));
+                        nameView.setTextColor(Color.parseColor(col));
+                        colourButton.setTextColor(Color.parseColor(col));
                         myLayout.setBackgroundColor(Color.parseColor(col));
                         colourButton.setBackgroundColor(Color.parseColor(oppositeColour(col)));
                     }
                 }
         );
+
+    }
+
+    //Use the below to add extra hidden features
+    @Override
+    public boolean onDown(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public void onShowPress(MotionEvent e) {
+
+    }
+
+    @Override
+    public boolean onSingleTapUp(MotionEvent e) {
+        return false;
+    }
+
+    @Override
+    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+        return false;
+    }
+
+    @Override
+    public void onLongPress(MotionEvent e) {
+        hexView.setText("");
+        nameView.setBackgroundColor(colourButton.getCurrentTextColor());
+    }
+
+    @Override
+    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+        return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        this.gestureDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
 
     //Random colour generator
     public String colourGenerator(){
-
         Random rn = new Random();
         String nums = "";
         int num;
@@ -103,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             hexnum = Integer.toHexString(num); //Convert int to hex string
             nums = nums + hexnum; //Append (to create 6 bit hex number)
         }
-        String colour = nums.toUpperCase();
+        colour = nums.toUpperCase();
         return "#" + colour;
     }
 
@@ -130,7 +186,7 @@ public class MainActivity extends AppCompatActivity {
                 "Mist ","Attack ","Pleasure ","Secret ","Time ","Zest ","Passion ","mystery "};
 
         String name = "";
-        int int_value1 = 0,int_value2 = 0,int_value3 = 0;
+        int int_value1,int_value2,int_value3;
         String p1 = "",p2 = "",p3 = "";
 
         for (int i = 0; i < 3; i++) {
