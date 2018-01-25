@@ -46,26 +46,31 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                         hex = rgbToHex(red, green, blue);
                         String hsv = getHSVValue(red, green, blue);
 
-                        hexText.setTextColor(Color.WHITE);
-                        rgbText.setTextColor(Color.WHITE);
-                        hsvText.setTextColor(Color.WHITE);
-
-                        hexText.setShadowLayer(2,2,2, Color.BLACK);
-                        rgbText.setShadowLayer(2,2,2, Color.BLACK);
-                        hsvText.setShadowLayer(2,2,2, Color.BLACK);
-
                         randButton.setTextColor(Color.parseColor(hex));
 
                         hexText.setText("Hex: " + hex);
                         rgbText.setText("rgb(" + red + ", " + green + ", " + blue + ")");
                         hsvText.setText(hsv);
-                        
+
                         randButton.setBackgroundColor(Color.parseColor(oppositeHex(hex)));
                         mainView.setBackgroundColor( 0xff000000 + red * 0x10000 + green * 0x100 + blue);
                     }
                 }
         );
 
+    }
+
+    /////////////////////////////////// GESTURE START /////////////////////////////////////////
+    @Override
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        //(key,value)
+    }
+
+    //reset the saved state values
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
     }
 
     //Use the below to add extra hidden features
@@ -76,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public void onShowPress(MotionEvent e) {
-
     }
 
     @Override
@@ -117,7 +121,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         this.gestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
-
+    //////////////////////////////////// GESTURE END //////////////////////////////////////////
 
 
     public int randomRed(){
