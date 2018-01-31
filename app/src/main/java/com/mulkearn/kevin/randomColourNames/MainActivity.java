@@ -1,9 +1,13 @@
 package com.mulkearn.kevin.randomColourNames;
 
+import android.content.Intent;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -57,6 +61,28 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                     }
                 }
         );
+
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.about:
+                //startActivity(new Intent(this, About.class));
+                return true;
+            case R.id.saveHex:
+                //startActivity(new Intent(this, Help.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 
@@ -173,36 +199,4 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
         return "hsv(" + hue + ", " + sat + ", " + val + ")";
     }
 
-//    public String colourName(String colour){
-//        String[] name1 = {" Smooth "," Rough "," Playful "," Wary "," Timid "," Reliable "," Ferocious "," Generous ",
-//        " Dramatic "," Cheerful "," Amusing "," Ambitious "," Dependable "," Vivid "," Keen "," Questionable "};
-//        String[] name2 = {"Dry ","Wet ","Hot ","Cold ","Warm ","Cool ","Good ","Bad ",
-//                "Day ","Night ","Sweet ","Sour ","Smart ","Strong ","Sharp ","Dull "};
-//        String[] name3 = {"Eruption ","Gamble ","Cream ","Summer ","Surprise ","Dream ","Emotion ","Whisper ",
-//                "Mist ","Attack ","Pleasure ","Secret ","Time ","Zest ","Passion ","mystery "};
-//
-//        String name = "";
-//        int int_value1,int_value2,int_value3;
-//        String p1 = "",p2 = "",p3 = "";
-//
-//        for (int i = 0; i < 3; i++) {
-//            if (i == 0) {
-//                String str_value = "" + colour.charAt(1); //hex value at 1
-//                int_value1 = Integer.parseInt(str_value, 16); //hex value to int
-//                p1 = name1[int_value1];
-//            }
-//            if (i == 1) {
-//                String str_value = "" + colour.charAt(3); //hex value at 3
-//                int_value2 = Integer.parseInt(str_value, 16); //hex value to int
-//                p2 = name2[int_value2];
-//            }
-//            if (i == 2) {
-//                String str_value = "" + colour.charAt(5); //hex value at 5
-//                int_value3 = Integer.parseInt(str_value, 16); //hex value to int
-//                p3 = name3[int_value3];
-//            }
-//            name = p1 + p2 + p3;
-//        }
-//        return name;
-//    }
 }
