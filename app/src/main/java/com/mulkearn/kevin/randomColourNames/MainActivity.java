@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     RelativeLayout mainView;
     Button randButton;
     TextView hexText, rgbText, hsvText;
-    String hex;
+    String hex = "#FFFFFF";
 
     Menu menu;
     MenuItem item;
@@ -83,16 +83,9 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             case R.id.about:
                 Intent i = new Intent(this, AboutActivity.class);
                 startActivity(i);
-
-//                if(item.getTitle() == "About"){
-//                   item.setTitle("Home");
-//                } else {
-//                    item.setTitle("About");
-//                }
-
                 return true;
             case R.id.saveHex:
-                if (hex != null){
+                if (hex != "#FFFFFF"){
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     ClipData clip = ClipData.newPlainText("Hex Value",hex);
                     clipboard.setPrimaryClip(clip);

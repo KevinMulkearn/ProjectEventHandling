@@ -5,4 +5,21 @@
     <string name="rgb_values">RGB Values</string>
     <string name="hsv_values">HSV Values</string>
     <string name="menu_view_name">About</string>
+    <string name="about_text">
+        About:\n
+        This App works by generating 3 random numbers\n
+        ranging from 0 to 255. These value represent\n
+        the red, green, and blue values that make up\n
+        any color. These value are then converted into\n
+        Hexadecimal and HSV representation.\n\n
+        How to Use:\n
+        Click the "Generate Random Color" to produce a\n
+        color. To save the hex value to the clipboard,\n
+        select the menu form the top right corner, and\n
+        select save. If you want to remove the text of\n
+        the screen to get a better view of the color,\n
+        press and hold the screen. To return the text,\n
+        tap the screen once.
+    </string>
+
 </resources>
