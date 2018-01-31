@@ -172,37 +172,4 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
         return "hsv(" + hue + ", " + sat + ", " + val + ")";
     }
-
-//    public String colourName(String colour){
-//        String[] name1 = {" Smooth "," Rough "," Playful "," Wary "," Timid "," Reliable "," Ferocious "," Generous ",
-//        " Dramatic "," Cheerful "," Amusing "," Ambitious "," Dependable "," Vivid "," Keen "," Questionable "};
-//        String[] name2 = {"Dry ","Wet ","Hot ","Cold ","Warm ","Cool ","Good ","Bad ",
-//                "Day ","Night ","Sweet ","Sour ","Smart ","Strong ","Sharp ","Dull "};
-//        String[] name3 = {"Eruption ","Gamble ","Cream ","Summer ","Surprise ","Dream ","Emotion ","Whisper ",
-//                "Mist ","Attack ","Pleasure ","Secret ","Time ","Zest ","Passion ","mystery "};
-//
-//        String name = "";
-//        int int_value1,int_value2,int_value3;
-//        String p1 = "",p2 = "",p3 = "";
-//
-//        for (int i = 0; i < 3; i++) {
-//            if (i == 0) {
-//                String str_value = "" + colour.charAt(1); //hex value at 1
-//                int_value1 = Integer.parseInt(str_value, 16); //hex value to int
-//                p1 = name1[int_value1];
-//            }
-//            if (i == 1) {
-//                String str_value = "" + colour.charAt(3); //hex value at 3
-//                int_value2 = Integer.parseInt(str_value, 16); //hex value to int
-//                p2 = name2[int_value2];
-//            }
-//            if (i == 2) {
-//                String str_value = "" + colour.charAt(5); //hex value at 5
-//                int_value3 = Integer.parseInt(str_value, 16); //hex value to int
-//                p3 = name3[int_value3];
-//            }
-//            name = p1 + p2 + p3;
-//        }
-//        return name;
-//    }
 }
