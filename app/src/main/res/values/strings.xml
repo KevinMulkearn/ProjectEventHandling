@@ -4,4 +4,5 @@
     <string name="hex_value">Hex Value</string>
     <string name="rgb_values">RGB Values</string>
     <string name="hsv_values">HSV Values</string>
+    <string name="menu_view_name">About</string>
 </resources>
