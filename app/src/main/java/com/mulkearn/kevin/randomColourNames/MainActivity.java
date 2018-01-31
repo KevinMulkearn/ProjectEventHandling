@@ -1,15 +1,24 @@
 package com.mulkearn.kevin.randomColourNames;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.RelativeLayout;
 import android.graphics.Color;
+import android.widget.Toast;
+
 import java.util.Random;
 
 
@@ -18,7 +27,10 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     RelativeLayout mainView;
     Button randButton;
     TextView hexText, rgbText, hsvText;
-    String hex;
+    String hex = "#FFFFFF";
+
+    Menu menu;
+    MenuItem item;
 
     private GestureDetectorCompat gestureDetector;
 
@@ -57,6 +69,34 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
                     }
                 }
         );
+
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.about:
+                Intent i = new Intent(this, AboutActivity.class);
+                startActivity(i);
+                return true;
+            case R.id.saveHex:
+                if (hex != "#FFFFFF"){
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("Hex Value",hex);
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(MainActivity.this, hex + " Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Nothing to Save", Toast.LENGTH_SHORT).show();
+                }
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
 
     }
 
