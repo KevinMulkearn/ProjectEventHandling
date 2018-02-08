@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v4.view.GestureDetectorCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,9 +19,7 @@ import android.widget.TextView;
 import android.widget.RelativeLayout;
 import android.graphics.Color;
 import android.widget.Toast;
-
 import java.util.Random;
-
 
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener{
 
@@ -28,11 +27,10 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     Button randButton;
     TextView hexText, rgbText, hsvText;
     String hex = "#FFFFFF";
-
     Menu menu;
     MenuItem item;
-
     private GestureDetectorCompat gestureDetector;
+    int click = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,18 +79,40 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.about:
-                Intent i = new Intent(this, AboutActivity.class);
-                startActivity(i);
+                Intent aboutIntent = new Intent(this, AboutActivity.class);
+                startActivity(aboutIntent);
                 return true;
             case R.id.saveHex:
                 if (hex != "#FFFFFF"){
+                    SharedPreferences sharedPref = getSharedPreferences("colors", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    if(click == 0){
+                        editor.putString("color0", hex);
+                    } else if (click == 1){
+                        editor.putString("color1", hex);
+                    } else if (click == 2){
+                        editor.putString("color2", hex);
+                    } else if (click == 3){
+                        editor.putString("color3", hex);
+                    } else if (click == 4){
+                        editor.putString("color4", hex);
+                    }
+                    editor.apply();
                     ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    ClipData clip = ClipData.newPlainText("Hex Value",hex);
+                    ClipData clip = ClipData.newPlainText("Hex Value", hex);
                     clipboard.setPrimaryClip(clip);
                     Toast.makeText(MainActivity.this, hex + " Copied to Clipboard", Toast.LENGTH_SHORT).show();
+                    click++;
+                    if (click > 4){
+                        click = 0;
+                    }
                 } else {
                     Toast.makeText(MainActivity.this, "Nothing to Save", Toast.LENGTH_SHORT).show();
                 }
+                return true;
+            case R.id.recent:
+                Intent savedIntent = new Intent(this, RecentColorsActivity.class);
+                startActivity(savedIntent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -199,13 +219,10 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
 
     public String getHSVValue(int r, int g, int b){
         float[] hsv = new float[3];
-
         Color.RGBToHSV(r, g, b, hsv);
-
         float h = hsv[0];
         float s = hsv[1] * 100;
         float v = hsv[2] * 100;
-
         String hue = Integer.toString((int) h) + "\u00b0";
         String sat = Integer.toString((int) s) + "%";
         String val = Integer.toString((int) v) + "%";
