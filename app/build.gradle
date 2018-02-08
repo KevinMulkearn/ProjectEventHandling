@@ -6,8 +6,8 @@ android {
         applicationId "com.mulkearn.kevin.randomColourNames"
         minSdkVersion 15
         targetSdkVersion 26
-        versionCode 7
-        versionName "5.0"
+        versionCode 8
+        versionName "5.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
